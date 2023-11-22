@@ -1,15 +1,13 @@
-package com.example.assignment6;
+package com.example.androidbasicapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,25 +16,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-// Import statements...
-
 public class MainActivity extends AppCompatActivity {
 
-    private void fetchData() {
-        TextView textView = findViewById(R.id.textView);
-        Log.i("Information", "Weather button pressed");
+    public void fetchData(){
+        TextView textViewTwo = findViewById(R.id.textView2);
+        Log.i("Information", "The Go Again button pressed");
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://api.open-meteo.com/v1/forecast?latitude=30.28&longitude=-97.76&hourly=temperature_2m&temperature_unit=fahrenheit";
+        String url = "https://www.google.com";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -44,65 +32,36 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        textView.setText("Response is: " + response.substring(0, 500));
-                        // JSON parser interpret and retrieve data
-
+                        textViewTwo.setText("Response is: " + response.substring(0,500));
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                textView.setText("That didn't work!");
+                textViewTwo.setText("That didn't work!");
             }
         });
-        // Add request to Queue
+
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = (Button) findViewById(R.id.button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttonTwo = (Button) findViewById(R.id.button2);
+
+        buttonTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 fetchData();
             }
         });
     }
-
-
-    // Go button click handler
-    public void goButtonTap(View view) {
+    public void goButtonTap(View view){
         EditText editTextOne = findViewById(R.id.editText1);
-        TextView textViewTwo = findViewById(R.id.textView2);
-        textViewTwo.setText(editTextOne.getText());
-        Log.i("Information", "The go button pressed");
-    }
-    private double calculateAverage(List<Double> temperatures) {
-        if (temperatures.isEmpty()) {
-            return 0;
-        }
-
-        double sum = 0;
-        for (double temperature : temperatures) {
-            sum += temperature;
-        }
-
-        return sum / temperatures.size();
-    }
-
-    private void updateUI(double averageTemperature) {
-        TextView averageTemperatureTextView = findViewById(R.id.textView);
-        averageTemperatureTextView.setText("Average Temperature: " + averageTemperature + " °C");
-    }
-
-    private void handleNetworkError(String errorMessage) {
-        Toast.makeText(MainActivity.this, "Network Error: " + errorMessage, Toast.LENGTH_SHORT).show();
-
-        TextView errorTextView = findViewById(R.id.textView);
-        errorTextView.setText("Network Error: " + errorMessage);
+        TextView textViewOne = findViewById(R.id.textView1);
+        textViewOne.setText(editTextOne.getText());
+        Log.i("Information", "The Go button pressed");
     }
 }
